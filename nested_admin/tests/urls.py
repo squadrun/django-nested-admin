@@ -13,7 +13,7 @@ for app in settings.INSTALLED_APPS:
 
 
 urlpatterns = [
-    path("_nesting/", include("nested_admin.urls")),
+    re_path(r"^_nesting/", include("nested_admin.urls")),
     re_path(r"^admin/", admin.site.urls),
 ]
 
@@ -22,4 +22,4 @@ try:
 except ImportError:
     pass
 else:
-    urlpatterns += [path("grappelli/", include("grappelli.urls"))]
+    urlpatterns += [re_path(r"^grappelli/", include("grappelli.urls"))]
