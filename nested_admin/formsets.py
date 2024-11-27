@@ -196,10 +196,7 @@ class NestedInlineFormSetMixin(object):
                         form.data[form.add_prefix(sort_field)] = six.text_type(i)
 
                     # Force recalculation of changed_data
-                    if django.VERSION > (1, 9):
-                        form.__dict__.pop('changed_data', None)
-                    else:
-                        form._changed_data = None
+                    form.__dict__.pop('changed_data', None)
 
                 i += 1
 
@@ -298,10 +295,7 @@ class NestedInlineFormSetMixin(object):
                         form.data[form.add_prefix(pk_name)] = ''
 
                     if not form.has_changed():
-                        if django.VERSION > (1, 9):
-                            form.__dict__['changed_data'].append(pk_name)
-                        else:
-                            form._changed_data.append(pk_name)
+                        form.__dict__['changed_data'].append(pk_name)
 
                     saved_instances.extend(self.save_new_objects([form], commit))
                     continue

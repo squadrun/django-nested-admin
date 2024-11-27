@@ -13,10 +13,7 @@ from django.utils.html import escape
 register = template.Library()
 
 
-if django.VERSION >= (1, 10):
-    from django.templatetags.static import static as _static
-else:
-    _static = None
+from django.templatetags.static import static as _static
 
 
 django_version = django.VERSION[:2]

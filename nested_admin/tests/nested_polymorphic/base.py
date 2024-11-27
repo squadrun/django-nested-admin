@@ -13,20 +13,16 @@ try:
     from polymorphic.models import PolymorphicModel
 except:
     # Temporary until django-polymorphic supports django 3.0
-    if django.VERSION < (3, 0):
-        raise
-    else:
-        class PolymorphicModel(object):
-            pass
+    class PolymorphicModel(object):
+        pass
 
 
 class BaseNestedPolymorphicTestCase(BaseNestedAdminTestCase):
 
     @classmethod
     def setUpClass(cls):
-        if django.VERSION > (2, 2):
-            raise SkipTest(
-                'django-polymorphic not yet compatible with Django 2.2 and 3.0')
+        raise SkipTest(
+            'django-polymorphic not yet compatible with Django 2.2 and 3.0')
         if 'suit' in settings.INSTALLED_APPS:
             raise SkipTest('Skipping for django-suit')
         super(BaseNestedPolymorphicTestCase, cls).setUpClass()

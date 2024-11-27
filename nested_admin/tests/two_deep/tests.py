@@ -821,8 +821,6 @@ class TestStackedInlineAdmin(InlineAdminTestCaseMixin, BaseNestedAdminTestCase):
     nested_models = (StackedSection, StackedItem)
 
     def test_add_item_inline_label_update(self):
-        if django.VERSION < (1, 9):
-            raise SkipTest("Test only applies to Django 1.9+")
         if self.has_grappelli:
             raise SkipTest("Test does not apply if using django-grappelli")
         if self.has_suit:

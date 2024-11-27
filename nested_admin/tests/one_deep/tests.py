@@ -78,8 +78,7 @@ class VisualComparisonTestCase(BaseNestedAdminTestCase):
 
         if os.environ.get('TRAVIS_BUILD_NUMBER'):
             # For some reason these tests fail on travis when Django > 1.11
-            if django.VERSION > (1, 11):
-                raise SkipTest("Issue with travis and Django >= 1.11")
+            raise SkipTest("Issue with travis and Django >= 1.11")
             cls.path_prefix = "travis_%s" % os.environ['TRAVIS_BUILD_NUMBER']
         else:
             cls.path_prefix = "local"
