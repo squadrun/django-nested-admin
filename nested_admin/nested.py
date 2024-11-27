@@ -9,7 +9,7 @@ try:
     from django.urls import reverse
 except ImportError:
     # Django <= 1.9
-    from django.core.urlresolvers import reverse
+    from django.urls import reverse
 from django.template.defaultfilters import capfirst
 import six
 from django.utils.functional import lazy
@@ -52,13 +52,12 @@ class NestedInlineAdminFormsetMixin(object):
         self.has_delete_permission = kwargs.pop('has_delete_permission', True)
         self.has_view_permission = kwargs.pop('has_view_permission', True)
 
-        if django.VERSION > (2, 1):
-            kwargs.update({
-                'has_add_permission': self.has_add_permission,
-                'has_change_permission': self.has_change_permission,
-                'has_delete_permission': self.has_delete_permission,
-                'has_view_permission': self.has_view_permission,
-            })
+        kwargs.update({
+            'has_add_permission': self.has_add_permission,
+            'has_change_permission': self.has_change_permission,
+            'has_delete_permission': self.has_delete_permission,
+            'has_view_permission': self.has_view_permission,
+        })
 
         super(NestedInlineAdminFormsetMixin, self).__init__(inline, *args, **kwargs)
         self.request = request

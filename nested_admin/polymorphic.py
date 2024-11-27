@@ -3,7 +3,7 @@ import json
 
 from django.conf import settings
 from django.contrib.admin import ModelAdmin
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from polymorphic.formsets import (
     BasePolymorphicInlineFormSet, BasePolymorphicModelFormSet,
     BaseGenericPolymorphicInlineFormSet)
@@ -114,7 +114,7 @@ class NestedPolymorphicInlineAdminFormset(
                 'childTypes': [
                     {
                         'type': get_model_id(model),
-                        'name': force_text(model._meta.verbose_name),
+                        'name': force_str(model._meta.verbose_name),
                     } for model in self.formset.child_forms.keys()
                 ],
             })

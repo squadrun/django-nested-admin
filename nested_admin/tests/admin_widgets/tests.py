@@ -5,7 +5,8 @@ from unittest import SkipTest
 import django
 from django.conf import settings
 import six
-from django.utils.text import slugify, unescape_entities
+import html
+from django.utils.text import slugify
 
 from nested_admin.tests.base import (
     expected_failure_if_suit, skip_if_not_grappelli, BaseNestedAdminTestCase)
@@ -132,7 +133,7 @@ class BaseWidgetTestCase(BaseNestedAdminTestCase):
         field_id = field.get_attribute('id')
         current_val = self.selenium.execute_script(
             'return $("#%s").find("option:selected").html()' % field_id)
-        self.assertEqual(unescape_entities(current_val), name)
+        self.assertEqual(html.escape(current_val), name)
 
 
 class TestAdminWidgets(BaseWidgetTestCase):

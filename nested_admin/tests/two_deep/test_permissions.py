@@ -9,7 +9,7 @@ from django.test import TestCase
 try:
     from django.urls import reverse
 except ImportError:
-    from django.core.urlresolvers import reverse
+    from django.urls import reverse
 
 from nested_admin.tests.base import BaseNestedAdminTestCase
 from .models import StackedGroup, StackedSection, StackedItem
@@ -24,8 +24,6 @@ def get_perm(Model, perm):
 class TestInlinePermissions(TestCase):
 
     def setUp(self):
-        if django.VERSION < (2, 1):
-            raise SkipTest("View permissions not available before django 2.1")
         super(TestInlinePermissions, self).setUp()
 
         self.group = StackedGroup.objects.create(pk=1, slug='group')
@@ -161,8 +159,6 @@ class SeleniumTestInlinePermissions(BaseNestedAdminTestCase):
 
     @classmethod
     def setUpClass(cls):
-        if django.VERSION < (2, 1):
-            raise SkipTest("View permissions not available before django 2.1")
 
         super(SeleniumTestInlinePermissions, cls).setUpClass()
         cls.section_cls, cls.item_cls = cls.nested_models

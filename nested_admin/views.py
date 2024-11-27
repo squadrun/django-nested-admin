@@ -7,7 +7,7 @@ try:
     from django.urls import reverse, NoReverseMatch
 except ImportError:
     # Django <= 1.9
-    from django.core.urlresolvers import reverse, NoReverseMatch
+    from django.urls import NoReverseMatch, reverse
 from django.http import HttpResponse, HttpResponseForbidden
 
 
