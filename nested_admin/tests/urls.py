@@ -1,6 +1,6 @@
 import django
 from django.conf import settings
-from django.urls import include, path, re_path
+from django.urls import include, re_path
 from django.contrib import admin
 
 # Explicitly import to register the admins for the test models
@@ -10,7 +10,7 @@ for app in settings.INSTALLED_APPS:
 
 
 urlpatterns = [
-    path('_nesting/', include('nested_admin.urls')),
+    re_path(r'^_nesting/', include('nested_admin.urls')),
 ]
 
 urlpatterns += [re_path(r'^admin/', admin.site.urls)]
@@ -20,4 +20,4 @@ try:
 except ImportError:
     pass
 else:
-    urlpatterns += [path("grappelli/", include("grappelli.urls"))]
+    urlpatterns += [re_path(r"^grappelli/", include("grappelli.urls"))]
