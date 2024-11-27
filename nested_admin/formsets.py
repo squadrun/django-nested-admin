@@ -12,7 +12,7 @@ import six
 from six.moves import range
 
 if six.PY2:
-    from django.utils.encoding import force_str as force_str
+    from django.utils.encoding import force_text as force_str
 else:
     from django.utils.encoding import force_str
 

@@ -9,7 +9,7 @@ from django.test import TestCase
 try:
     from django.urls import reverse
 except ImportError:
-    from django.urls import reverse
+    from django.core.urlresolvers import reverse
 
 from nested_admin.tests.base import BaseNestedAdminTestCase
 from .models import StackedGroup, StackedSection, StackedItem

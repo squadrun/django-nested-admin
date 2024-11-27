@@ -9,7 +9,7 @@ try:
     from django.urls import reverse
 except ImportError:
     # Django <= 1.9
-    from django.urls import reverse
+    from django.core.urlresolvers import reverse
 from django.template.defaultfilters import capfirst
 import six
 from django.utils.functional import lazy
