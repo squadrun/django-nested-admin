@@ -1,0 +1,48 @@
+name: Build and Upload to S3
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install build dependencies
+        run: pip install setuptools wheel
+
+      - name: Get latest commit hash
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build source distribution
+        run: python3 setup.py sdist
+
+      - name: Rename package with commit hash
+        run: |
+          FILE=$(ls dist/*.tar.gz)
+          BASENAME=$(basename "$FILE")
+          NAME="${BASENAME%.tar.gz}"
+          NEW_NAME="${NAME}-${COMMIT_HASH}.tar.gz"
+          mv "$FILE" "dist/$NEW_NAME"
+          echo "NEW_PACKAGE=dist/$NEW_NAME" >> $GITHUB_ENV
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.PKG_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PKG_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp "$NEW_PACKAGE" "s3://sr-devops-public/gh-actions/"
+          echo "S3_URL=https://sr-devops-public.s3.ap-south-1.amazonaws.com/gh-actions/$NEW_PACKAGE" >> $GITHUB_ENV
+
